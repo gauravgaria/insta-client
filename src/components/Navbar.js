@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <>
@@ -7,7 +7,7 @@ const Navbar = () => {
         <div className=" mx-auto px-10">
           <div className="flex justify-between">
             <div>
-              <a href="#" className="flex items-center py-4">
+              <Link to="/" className="flex items-center py-4">
                 <img
                   src="/assets/instalogo.jpg"
                   alt="Logo"
@@ -16,28 +16,28 @@ const Navbar = () => {
                 <span className="font-semibold text-gray-500 text-lg">
                   InstaPost
                 </span>
-              </a>
+              </Link>
             </div>
 
             <div className="hidden md:flex px-20 items-center space-x-4">
-              <a
-                href=""
+              <Link
+                to="/login"
                 className="py-4 px-2 text-gray-500 hover:text-green-500 font-semibold "
               >
                 Login
-              </a>
-              <a
-                href=""
+              </Link>
+              <Link
+                to="/signup"
                 className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300"
               >
                 Signup
-              </a>
-              <a
-                href=""
+              </Link>
+              <Link
+                to="/profile"
                 className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300"
               >
                 Profile
-              </a>
+              </Link>
             </div>
           </div>
         </div>

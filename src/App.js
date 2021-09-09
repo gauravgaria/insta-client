@@ -7,9 +7,10 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Navbar />
-        <Route exact path="/"></Route>
-        <Route exact path="/"></Route>
-        <Route exact path="/"></Route>
+        <Route exact path="/" component={Home}></Route>
+        <Route path="/profile" component={Profile}></Route>
+        <Route path="/login" component={Login}></Route>
+        <Route path="/signup" component={Signup}></Route>
       </BrowserRouter>
     </div>
   );
