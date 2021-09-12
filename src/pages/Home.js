@@ -1,8 +1,9 @@
 import React from "react";
-import { Postcard } from "../components";
+import { CreatePost, Postcard } from "../components";
 const Home = () => {
   return (
     <div>
+      <CreatePost />
       <Postcard />
       <Postcard />
     </div>
