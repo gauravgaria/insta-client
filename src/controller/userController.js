@@ -32,7 +32,6 @@ const userController = {
         },
       });
       if (res) {
-        console.log(res);
         return this.tokenValidation(res);
       }
     } catch (err) {
@@ -52,11 +51,10 @@ const userController = {
         if (!token) {
           return false;
         } else {
-          console.log(token);
           return token;
         }
       }
-      console.log(res);
+
       return res;
     }
   },
@@ -65,7 +63,7 @@ const userController = {
   async protect() {
     let refresh_token = Cookies.get("jid");
     //let refreshToken = Cookies.get("refresh");
-    console.log(refresh_token);
+
     const accessToken = await this.hasAccess(refresh_token);
 
     if (!accessToken) {
@@ -78,11 +76,10 @@ const userController = {
   //hasAccess method
   async hasAccess(refreshToken) {
     if (!refreshToken) {
-      console.log("asd" + refreshToken);
       return null; //unauthorized
     } else {
       const accessToken = await this.refresh(refreshToken);
-      console.log(accessToken);
+
       return accessToken;
     }
   },
@@ -102,7 +99,6 @@ const userController = {
     if (!newAccessToken) {
       console.log("Invalid refresh token");
     } else {
-      console.log(newAccessToken);
       return newAccessToken;
     }
   },

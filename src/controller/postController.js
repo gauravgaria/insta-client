@@ -17,19 +17,12 @@ const postController = {
             "Content-Type": "multipart/form-data",
           },
         });
+
         if (postResponse.status === 200) {
-          console.log(postResponse);
+          return postResponse;
         }
       }
     }
-
-    /*  const res = await axios.post("/api/post/create", post, {
-            withCredentials: true,
-            credentials: "include",
-            headers: {
-              "access-control-allow-origin": "*",
-            },
-          }); */
   },
 };
 export default postController;
