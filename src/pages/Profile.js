@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Cookies from "js-cookie";
+
 const Profile = () => {
+  const history = useHistory();
+  useEffect(() => {
+    const refresh_token = Cookies.get("jid");
+    console.log(refresh_token);
+    if (!refresh_token) {
+      history.push("login");
+    }
+  }, []);
   return (
     <>
       <main className="bg-gray-100 bg-opacity-25">

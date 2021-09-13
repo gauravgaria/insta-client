@@ -32,7 +32,7 @@ const CreatePost = () => {
   const submitPost = async () => {
     const { title, body, files } =
       post; /**Destructure the object to get key and value */
-
+    console.log(files);
     let formData = new FormData();
     formData.append("file", files[0]);
     formData.append("body", body);

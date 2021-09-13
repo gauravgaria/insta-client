@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../App";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,7 +7,7 @@ import { loginSchema } from "../validations/loginValidation";
 import userController from "../controller/userController";
 const Login = () => {
   const history = useHistory();
-
+  const { state, dispatch } = useContext(UserContext);
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -37,6 +38,7 @@ const Login = () => {
       .loginUser(credentials)
       .then((res) => {
         if (res.status === 200) {
+          dispatch({ type: "USER", payload: res.data.user });
           history.push("/");
         } else {
           setCredError(res.data.message);

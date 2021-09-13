@@ -20,6 +20,8 @@ const postController = {
 
         if (postResponse.status === 200) {
           return postResponse;
+        } else {
+          console.log(postResponse);
         }
       }
     }

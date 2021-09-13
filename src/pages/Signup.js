@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../validations/registerValidation";
 import userController from "../controller/userController";
+import { UserContext } from "../App";
 const Signup = () => {
   //intialise redirect
   let history = useHistory();
@@ -16,6 +17,7 @@ const Signup = () => {
     confirm_password: "",
   });
 
+  const { state, dispatch } = useContext(UserContext);
   const [emailError, setEmailError] = useState(" ");
 
   //initialise form handler
@@ -43,6 +45,7 @@ const Signup = () => {
       .storeUserData(user)
       .then((res) => {
         if (res.status === 200) {
+          dispatch({ type: "USER", payload: res.data.user });
           history.push("/");
         } else {
           setEmailError(res.data.message);
