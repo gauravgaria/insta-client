@@ -75,6 +75,7 @@ const userController = {
 
   //hasAccess method
   async hasAccess(refreshToken) {
+    console.log(refreshToken);
     if (!refreshToken) {
       return null; //unauthorized
     } else {
@@ -114,21 +115,27 @@ const userController = {
       });
       return res;
     } else {
-      const access = await this.hasAccess(access_token, refresh_token);
+      console.log(access_token, refresh_token);
+      if (access_token || refresh_token) {
+        const access = await this.hasAccess(refresh_token);
 
-      if (access) {
-        const res = await axios.get("/api/me", {
-          credentials: "include",
-          headers: {
-            authorization: `Bearer ${access}`,
-            Accept: "application/json",
-          },
-        });
-        if (access) {
-          return res.data;
-        } else {
-          console.log("invalid token");
+        if (access.status === 200) {
+          const res = await axios.get("/api/me", {
+            credentials: "include",
+            headers: {
+              authorization: `Bearer ${access.data.access_token}`,
+              Accept: "application/json",
+            },
+          });
+
+          if (res) {
+            return res.data;
+          } else {
+            console.log("invalid token");
+          }
         }
+      } else {
+        console.log("invalid token");
       }
     }
   },

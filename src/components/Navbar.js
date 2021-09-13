@@ -3,7 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import { UserContext } from "../App";
 const Navbar = () => {
-  const [login, setLogin] = useState(false);
   const history = useHistory();
   const logoutHandler = () => {
     Cookies.remove("jid");
