@@ -8,42 +8,49 @@ const Wrapper = {
   width: "32%",
   marginLeft: "480px",
 };
-const Postcard = () => {
+const Postcard = (props) => {
   return (
     <>
-      <div class="wrapper" style={Wrapper}>
+      <div className="wrapper" style={Wrapper}>
         <div>
+          <div className="bg-white pb-3 shadow-lg">
+            <div className="ml-2 text-gray-600  text-sm font-semibold tracking-wider">
+              <img
+                className="rounded-full h-7 w-7 inline mr-3"
+                src="../../assets/no_image.png"
+                alt="no-pic"
+              />
+              <span>{props.post.postedBy.name}</span>
+            </div>
+          </div>
           <img
-            src="https://source.unsplash.com/random/350x350"
+            src={props.post.photo}
             alt=" random imgee"
-            class="w-full object-cover object-center rounded-lg shadow-md"
+            className="w-full object-cover object-center rounded-lg shadow-md"
           />
-
-          <div class="relative px-4 -mt-16  ">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-              <div class="flex items-baseline">
-                <span class="bg-teal-200 text-teal-800 text-xs px-2 inline-block rounded-full  uppercase font-semibold tracking-wide">
+          <div className="relative px-4 -mt-16  ">
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+              <div className="flex items-baseline">
+                <span className="bg-teal-200 text-teal-800 text-xs px-2 inline-block rounded-full  uppercase font-semibold tracking-wide">
                   Title
                 </span>
-                <div class="ml-2 text-gray-600 uppercase text-xs font-semibold tracking-wider">
+                <div className="ml-2 text-gray-600 uppercase text-xs font-semibold tracking-wider">
                   2 likes &bull; 3 shares
+                  <i class="fa fa-heart-o" aria-hidden="true"></i>
+                  <i class="fa fa-heart-o" aria-hidden="true"></i>
                 </div>
               </div>
 
-              <h4 class="mt-1 text-xl font-semibold uppercase leading-tight truncate">
-                Hotel Plaza
+              <h4 className="mt-1 text-xl font-semibold uppercase leading-tight truncate">
+                {props.post.title}
               </h4>
 
-              <div class="mt-1">
-                Amazing day at the hotel plazaz, it is the best place to hang
-                out with friends family. Food here is awesome and hospitality is
-                also very good. I hope my you guys will check it out once
-              </div>
-              <div class="mt-4">
-                <span class="text-teal-600 text-md font-semibold">
+              <div className="mt-1"> {props.post.body}</div>
+              <div className="mt-4">
+                <span className="text-teal-600 text-md font-semibold">
                   Comments [12]
                 </span>
-                <div class="text-sm text-gray-600">
+                <div className="text-sm text-gray-600">
                   show two-three comments here see more
                 </div>
               </div>

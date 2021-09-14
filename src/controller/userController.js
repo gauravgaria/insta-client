@@ -139,6 +139,21 @@ const userController = {
       }
     }
   },
+
+  async logoutUser(refresh_token) {
+    const refresh = {
+      token: refresh_token,
+    };
+    const logoutRes = await axios.post("/api/logout", refresh, {
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    if (logoutRes.status === 200) {
+      return logoutRes;
+    }
+  },
 };
 
 export default userController;

@@ -2,12 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import { UserContext } from "../App";
+import userController from "../controller/userController";
 const Navbar = () => {
   const history = useHistory();
-  const logoutHandler = () => {
-    Cookies.remove("jid");
-    dispatch({ type: "CLEAR" });
-    history.push("/login");
+  const logoutHandler = async () => {
+    const refresh_token = Cookies.get("jid");
+    const logoutUser = await userController.logoutUser(refresh_token);
+
+    if (logoutUser.status === 200) {
+      Cookies.remove("jid");
+      dispatch({ type: "CLEAR" });
+      history.push("/login");
+    }
   };
 
   const { state, dispatch } = useContext(UserContext);

@@ -26,5 +26,29 @@ const postController = {
       }
     }
   },
+
+  async showAllPosts() {
+    let refresh_token = Cookies.get("jid");
+
+    if (refresh_token) {
+      const res = await userController.protect(refresh_token);
+
+      if ((res.status = 200 && res.data.access_token)) {
+        const getPosts = await axios.get("api/post/posts", {
+          credentials: "include",
+          headers: {
+            authorization: `Bearer ${res.data.access_token}`,
+          },
+        });
+
+        if (getPosts.status === 200) {
+          console.log(getPosts);
+          return getPosts;
+        } else {
+          console.log(getPosts);
+        }
+      }
+    }
+  },
 };
 export default postController;

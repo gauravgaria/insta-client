@@ -5,12 +5,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { postSchema } from "../validations/postValidation";
 import postController from "../controller/postController";
 import axios from "axios";
+import ImageLoader from "../helper/ImageLoader";
 const CreatePost = () => {
   const [post, setPost] = useState({
     title: "",
     body: "",
     photo: "",
   });
+
+  const [loader, setLoader] = useState(false);
 
   const {
     register,
@@ -30,6 +33,7 @@ const CreatePost = () => {
   };
 
   const submitPost = async () => {
+    setLoader(true);
     const { title, body, files } =
       post; /**Destructure the object to get key and value */
     console.log(files);
@@ -41,6 +45,7 @@ const CreatePost = () => {
     const res = await postController.createPost(formData);
     if (res) {
       console.log(res);
+      setLoader(false);
     }
   };
 
@@ -72,7 +77,11 @@ const CreatePost = () => {
                         placeholder="Enter a title"
                         className="-mx-6  ml-1 px-8 w-full border rounded px-3 py-1 text-gray-700"
                       />
+                      <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                        {errors.title?.message}
+                      </span>
                     </div>
+
                     <label
                       for="about"
                       className="block text-sm font-medium text-gray-700"
@@ -90,6 +99,9 @@ const CreatePost = () => {
                         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
                         placeholder="Enter some description for your post in not more than 100 words"
                       ></textarea>
+                      <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                        {errors.body?.message}
+                      </span>
                     </div>
                   </div>
 
@@ -120,22 +132,22 @@ const CreatePost = () => {
                           >
                             <span>Upload a file</span>
                             <input
+                              name="files"
                               id="file-upload"
-                              name="file-upload"
                               type="file"
                               onChange={onChangeHandler}
                               className="sr-only"
                             />
                           </label>
-                          <p className="pl-1">or drag and drop</p>
                         </div>
-                        <p className="text-xs text-gray-500">
-                          PNG, JPG, GIF up to 10MB
-                        </p>
                       </div>
                     </div>
+                    {/*  <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                      {errors.photo?.message}
+                    </span> */}
                   </div>
                 </div>
+                {loader ? <ImageLoader /> : null}
                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                   <button
                     type="submit"
