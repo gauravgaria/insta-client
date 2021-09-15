@@ -5,13 +5,17 @@ axios.defaults.withCredentials = true;
 const userController = {
   async storeUserData(user) {
     try {
-      const res = await axios.post("/api/signup", user, {
-        withCredentials: true,
-        credentials: "include",
-        headers: {
-          "access-control-allow-origin": "set-cookie",
-        },
-      });
+      const res = await axios.post(
+        process.env.REACT_APP_INSTA_API_PROD + "/api/signup",
+        user,
+        {
+          withCredentials: true,
+          credentials: "include",
+          headers: {
+            "access-control-allow-origin": "set-cookie",
+          },
+        }
+      );
       if (res) {
         return this.tokenValidation(res);
       }
