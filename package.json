@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://6141c8af76cfcf000978e267--upbeat-rosalind-b6f258.netlify.app/",
   "dependencies": {
     "@hookform/resolvers": "^2.8.0",
     "@testing-library/jest-dom": "^5.11.4",
