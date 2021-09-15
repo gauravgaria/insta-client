@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,7 +6,10 @@ import { postSchema } from "../validations/postValidation";
 import postController from "../controller/postController";
 import axios from "axios";
 import ImageLoader from "../helper/ImageLoader";
-const CreatePost = () => {
+import { UserContext } from "../App";
+const CreatePost = (props) => {
+  const { state, dispatch } = useContext(UserContext);
+  let count = 0;
   const [post, setPost] = useState({
     title: "",
     body: "",
@@ -14,7 +17,7 @@ const CreatePost = () => {
   });
 
   const [loader, setLoader] = useState(false);
-
+  let [dataCount, setDataCount] = useState(0);
   const {
     register,
     handleSubmit,
@@ -43,9 +46,12 @@ const CreatePost = () => {
     formData.append("title", title);
 
     const res = await postController.createPost(formData);
-    if (res) {
+    if (res.status === 200) {
       console.log(res);
       setLoader(false);
+      dataCount++;
+      setDataCount(dataCount);
+      props.setCount(dataCount);
     }
   };
 
@@ -116,13 +122,13 @@ const CreatePost = () => {
                           stroke="currentColor"
                           fill="none"
                           viewBox="0 0 48 48"
-                          aria-hidden="true"
+                          ariaHidden="true"
                         >
                           <path
                             d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
                         <div className="flex text-sm text-gray-600">

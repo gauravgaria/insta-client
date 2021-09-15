@@ -42,7 +42,6 @@ const postController = {
         });
 
         if (getPosts.status === 200) {
-          console.log(getPosts);
           return getPosts;
         } else {
           console.log(getPosts);

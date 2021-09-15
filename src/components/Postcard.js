@@ -36,8 +36,6 @@ const Postcard = (props) => {
                 </span>
                 <div className="ml-2 text-gray-600 uppercase text-xs font-semibold tracking-wider">
                   2 likes &bull; 3 shares
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
                 </div>
               </div>
 

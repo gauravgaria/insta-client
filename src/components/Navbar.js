@@ -18,11 +18,19 @@ const Navbar = () => {
 
   const { state, dispatch } = useContext(UserContext);
   const renderNavList = () => {
-    console.log(state);
     if (state) {
       return [
         <>
-          welcome {state.name}
+          <div className="bg-white pt-1">
+            <div className="ml-2 text-gray-600  text-sm font-semibold tracking-wider">
+              <img
+                className="rounded-full h-7 w-7 inline mr-3"
+                src="../../assets/no_image.png"
+                alt="no-pic"
+              />
+              <span>{state.name}</span>
+            </div>
+          </div>
           <Link
             to="/profile"
             className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300"

@@ -14,14 +14,11 @@ const Routing = () => {
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    // console.log()
-    console.log("app " + state);
     const refresh_token = Cookies.get("jid");
     const access_token = Cookies.get("sid");
-    console.log(access_token);
+
     userController.getUserData(access_token, refresh_token).then((res) => {
       if (res && refresh_token) {
-        console.log(res);
         dispatch({ type: "USER", payload: res });
       } else {
         history.push("/login");

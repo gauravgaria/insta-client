@@ -75,7 +75,6 @@ const userController = {
 
   //hasAccess method
   async hasAccess(refreshToken) {
-    console.log(refreshToken);
     if (!refreshToken) {
       return null; //unauthorized
     } else {
@@ -115,7 +114,6 @@ const userController = {
       });
       return res;
     } else {
-      console.log(access_token, refresh_token);
       if (access_token || refresh_token) {
         const access = await this.hasAccess(refresh_token);
 
