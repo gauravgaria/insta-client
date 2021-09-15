@@ -10,7 +10,7 @@ const Home = () => {
   const { state, dispatch } = useContext(UserContext);
   const getUserPosts = async () => {
     const posts = await postController.showAllPosts();
-    if (posts.status === 200) {
+    if (posts && posts.status === 200) {
       const array = posts.data.posts.reverse();
       setData(array);
     }
