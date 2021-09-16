@@ -103,7 +103,9 @@ const userController = {
     }
   },
 
-  async getUserData(access_token, refresh_token) {
+  async getUserData() {
+    let refresh_token = Cookies.get("jid");
+    let access_token = Cookies.get("sid");
     if (access_token) {
       const res = await axios.get("/api/me", {
         credentials: "include",
@@ -113,28 +115,26 @@ const userController = {
         },
       });
       return res;
-    } else {
-      if (access_token || refresh_token) {
-        const access = await this.hasAccess(refresh_token);
+    } else if (access_token || refresh_token) {
+      const access = await this.hasAccess(refresh_token);
 
-        if (access.status === 200) {
-          const res = await axios.get("/api/me", {
-            credentials: "include",
-            headers: {
-              authorization: `Bearer ${access.data.access_token}`,
-              Accept: "application/json",
-            },
-          });
+      if (access.status === 200) {
+        const res = await axios.get("/api/me", {
+          credentials: "include",
+          headers: {
+            authorization: `Bearer ${access.data.access_token}`,
+            Accept: "application/json",
+          },
+        });
 
-          if (res) {
-            return res.data;
-          } else {
-            console.log("invalid token");
-          }
+        if (res) {
+          return res.data;
+        } else {
+          console.log("invalid token");
         }
-      } else {
-        console.log("invalid token");
       }
+    } else {
+      console.log("invalid token");
     }
   },
 

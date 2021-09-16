@@ -29,24 +29,56 @@ const postController = {
 
   async showAllPosts() {
     let refresh_token = Cookies.get("jid");
+    try {
+      if (refresh_token) {
+        const res = await userController.protect(refresh_token);
 
-    if (refresh_token) {
-      const res = await userController.protect(refresh_token);
+        if ((res.status = 200 && res.data.access_token)) {
+          const getPosts = await axios.get("api/post/posts", {
+            credentials: "include",
+            headers: {
+              authorization: `Bearer ${res.data.access_token}`,
+            },
+          });
 
-      if ((res.status = 200 && res.data.access_token)) {
-        const getPosts = await axios.get("api/post/posts", {
-          credentials: "include",
-          headers: {
-            authorization: `Bearer ${res.data.access_token}`,
-          },
-        });
-
-        if (getPosts.status === 200) {
-          return getPosts;
-        } else {
-          console.log(getPosts);
+          if (getPosts.status === 200) {
+            return getPosts;
+          } else {
+            console.log(getPosts);
+          }
         }
+      } else {
+        console.log("invalid token");
       }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  async showMyPosts() {
+    let refresh_token = Cookies.get("jid");
+    try {
+      if (refresh_token) {
+        const res = await userController.protect(refresh_token);
+
+        if ((res.status = 200 && res.data.access_token)) {
+          const getUserPosts = await axios.get("api/post/mypost", {
+            credentials: "include",
+            headers: {
+              authorization: `Bearer ${res.data.access_token}`,
+            },
+          });
+          if (getUserPosts.status === 200) {
+            return getUserPosts;
+          } else {
+            console.log(getUserPosts);
+          }
+        }
+      } else {
+        console.log("invalid token");
+      }
+    } catch (err) {
+      console.log(err);
     }
   },
 };

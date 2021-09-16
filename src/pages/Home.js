@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { CreatePost, Postcard } from "../components";
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -8,6 +8,9 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const { state, dispatch } = useContext(UserContext);
+
+  const history = useHistory();
+
   const getUserPosts = async () => {
     const posts = await postController.showAllPosts();
     if (posts && posts.status === 200) {
@@ -16,9 +19,17 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getUserPosts();
   }, [count]);
+
+  /*  useEffect(() => {
+    if (state === null || state === undefined) {
+      history.push("/login");
+    } else {
+      getUserPosts();
+    }
+  }, [count]); */
 
   return (
     <div>

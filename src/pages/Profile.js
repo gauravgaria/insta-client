@@ -1,17 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useContext, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
+import { UserContext } from "../App";
+import userController from "../controller/userController";
+import postController from "../controller/postController";
+import ProfilePostcard from "../components/ProfilePostcard";
 
 const Profile = () => {
   const history = useHistory();
-  useEffect(() => {
+
+  const { state, dispatch } = useContext(UserContext);
+  const [userPost, setUserPosts] = useState([]);
+  //  console.log(state);
+  async function getUserProfileData() {
+    const userData = await postController.showMyPosts();
+    if (userData.status === 200) {
+      setUserPosts(userData.data.userPosts);
+      //  console.log(userData.data.userPosts);
+    }
+  }
+
+  useLayoutEffect(() => {
+    getUserProfileData();
+  }, []);
+
+  /* useEffect(() => {
     const refresh_token = Cookies.get("jid");
     console.log(refresh_token);
     if (!refresh_token) {
-      history.push("login");
+      history.push("/login");
     }
-  }, []);
+  }, []); */
   return (
     <>
       <main className="bg-gray-100 bg-opacity-25">
@@ -31,7 +51,7 @@ const Profile = () => {
             <div className="w-8/12 md:w-7/12 ml-4">
               <div className="md:flex md:flex-wrap md:items-center mb-4">
                 <h2 className="text-3xl inline-block font-light md:mr-2 mb-2 sm:mb-0">
-                  Gaurav Garia
+                  {state ? state.name : "loading"}
                 </h2>
 
                 {/* <!-- badge --> */}
@@ -60,16 +80,16 @@ const Profile = () => {
               {/*   <!-- post, following, followers list for medium screens --> */}
               <ul className="hidden md:flex space-x-8 mb-4">
                 <li>
-                  <span className="font-semibold">136</span>
+                  <span className="font-semibold pr-1">{userPost.length}</span>
                   posts
                 </li>
 
                 <li>
-                  <span className="font-semibold">40.5k</span>
+                  <span className="font-semibold"></span>
                   followers
                 </li>
                 <li>
-                  <span className="font-semibold">302</span>
+                  <span className="font-semibold"></span>
                   following
                 </li>
               </ul>
@@ -143,179 +163,9 @@ const Profile = () => {
             </ul>
             {/* <!-- flexbox grid --> */}
             <div className="flex flex-wrap -mx-px md:-mx-3">
-              {/*   <!-- column --> */}
-              <div className="w-1/3 p-px md:px-3">
-                {/* <!-- post 1--> */}
-                <Link to="#">
-                  <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
-                    {/*  <!-- post image-->
-                     */}
-                    <img
-                      className="w-full h-full profile  left-0 top-0 object-cover"
-                      src="https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                      alt=""
-                    />
-                    <i className="fas fa-square  right-0 top-0 m-1"></i>
-                    {/*  <!-- overlay-->
-                     */}{" "}
-                    <div
-                      className="overlay bg-gray-800 bg-opacity-25 w-full h-full profile  
-                              left-0 top-0 hidden"
-                    >
-                      <div
-                        className="flex justify-center items-center 
-                                  space-x-4 h-full profile"
-                      >
-                        <span className="p-2">
-                          <i className="fas fa-heart"></i>
-                          412K
-                        </span>
-
-                        <span className="p-2">
-                          <i className="fas fa-comment"></i>
-                          2,909
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
-              </div>
-
-              <div className="w-1/3 p-px md:px-3">
-                <Link to="#">
-                  {/*  <!-- post 2 --> */}
-                  <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
-                    <img
-                      className="w-full h-full profile  left-0 top-0 object-cover"
-                      style={{ height: "350px" }}
-                      src="https://images.unsplash.com/photo-1498409570040-05bf6d3dd5b5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                      alt=""
-                    />
-
-                    {/* <!-- overlay--> */}
-                    <div
-                      className="overlay bg-gray-800 bg-opacity-25 w-full h-full profile  
-                              left-0 top-0 hidden"
-                    >
-                      <div
-                        className="flex justify-center items-center 
-                                  space-x-4 h-full profile"
-                      >
-                        <span className="p-2">
-                          <i className="fas fa-heart"></i>
-                          412K
-                        </span>
-
-                        <span className="p-2">
-                          <i className="fas fa-comment"></i>
-                          1,993
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
-              </div>
-
-              <div className="w-1/3 p-px md:px-3">
-                <Link to="#">
-                  <article className="post bg-gray-100 text-white relative pb-full  md:mb-6">
-                    <img
-                      className="w-full h-full profile  left-0 top-0 object-cover"
-                      style={{ height: "350px" }}
-                      src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                      alt=""
-                    />
-                    {/* <!-- overlay--> */}
-                    <div
-                      className="overlay bg-gray-800 bg-opacity-25 w-full h-full profile  
-                              left-0 top-0 hidden"
-                    >
-                      <div
-                        className="flex justify-center items-center 
-                                  space-x-4 h-full profile"
-                      >
-                        <span className="p-2">
-                          <i className="fas fa-heart"></i>
-                          112K
-                        </span>
-
-                        <span className="p-2">
-                          <i className="fas fa-comment"></i>
-                          2,090
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
-              </div>
-
-              <div className="w-1/3 p-px md:px-3">
-                <Link to="#">
-                  <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
-                    <img
-                      className="w-full h-full profile  left-0 top-0 object-cover"
-                      style={{ height: "350px" }}
-                      src="https://images.unsplash.com/photo-1533105079780-92b9be482077?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                      alt=""
-                    />
-
-                    <i className="fas fa-video  right-0 top-0 m-1"></i>
-
-                    {/*   <!-- overlay--> */}
-                    <div
-                      className="overlay bg-gray-800 bg-opacity-25 w-full h-full profile  
-                              left-0 top-0 hidden"
-                    >
-                      <div
-                        className="flex justify-center items-center 
-                                  space-x-4 h-full profile"
-                      >
-                        <span className="p-2">
-                          <i className="fas fa-heart"></i>
-                          841K
-                        </span>
-
-                        <span className="p-2">
-                          <i className="fas fa-comment"></i>
-                          909
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
-              </div>
-
-              <div className="w-1/3 p-px md:px-3">
-                <Link to="#">
-                  <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
-                    <img
-                      className="w-full h-full profile  left-0 top-0 object-cover"
-                      src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
-                      alt=""
-                    />
-                    {/* <!-- overlay--> */}
-                    <div
-                      className="overlay bg-gray-800 bg-opacity-25 w-full h-full profile  
-                              left-0 top-0 hidden"
-                    >
-                      <div
-                        className="flex justify-center items-center 
-                                  space-x-4 h-full profile"
-                      >
-                        <span className="p-2">
-                          <i className="fas fa-heart"></i>
-                          120K
-                        </span>
-
-                        <span className="p-2">
-                          <i className="fas fa-comment"></i>
-                          3,909
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
-              </div>
+              {userPost.map((post, index) => {
+                return <ProfilePostcard key={index} posts={post} />;
+              })}
             </div>
           </div>
         </div>
