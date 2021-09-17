@@ -67,7 +67,7 @@ function App() {
       console.log("already  in");
       setTimeout(() => {
         setLoader(false);
-      }, 6000);
+      }, 3000);
     }
   }, []);
 
