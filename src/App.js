@@ -58,9 +58,17 @@ function App() {
   `;
 
   useEffect(() => {
-    setTimeout(() => {
+    const refresh_token = Cookies.get("jid");
+    console.log(refresh_token);
+    if (refresh_token) {
+      console.log("already logged in");
       setLoader(false);
-    }, 6000);
+    } else {
+      console.log("already  in");
+      setTimeout(() => {
+        setLoader(false);
+      }, 6000);
+    }
   }, []);
 
   return (
