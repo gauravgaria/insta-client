@@ -15,9 +15,12 @@ const Profile = () => {
   //  console.log(state);
   async function getUserProfileData() {
     const userData = await postController.showMyPosts();
-    if (userData.status === 200) {
+
+    if (userData !== undefined && userData.status === 200) {
       setUserPosts(userData.data.userPosts);
       //  console.log(userData.data.userPosts);
+    } else {
+      history.push("/login");
     }
   }
 

@@ -13,9 +13,11 @@ const Home = () => {
 
   const getUserPosts = async () => {
     const posts = await postController.showAllPosts();
-    if (posts && posts.status === 200) {
+    if (posts !== undefined && posts.status === 200) {
       const array = posts.data.posts.reverse();
       setData(array);
+    } else {
+      history.push("/login");
     }
   };
 

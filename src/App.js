@@ -1,10 +1,19 @@
-import React, { useEffect, createContext, useContext, useReducer } from "react";
+import React, {
+  useEffect,
+  createContext,
+  useContext,
+  useReducer,
+  useState,
+} from "react";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { Home, Profile, Login, Signup } from "./pages";
 import Cookies from "js-cookie";
 import { reducer, initalState } from "./reducers/useReducer";
 import userController from "./controller/userController";
+import { css } from "@emotion/react";
+
+import HashLoader from "react-spinners/HashLoader";
 
 export const UserContext = createContext();
 
@@ -38,14 +47,54 @@ const Routing = () => {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initalState);
+  const [loader, setLoader] = useState(true);
+
+  const override = css`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  `;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoader(false);
+    }, 6000);
+  }, []);
+
   return (
     <div className="App">
-      <UserContext.Provider value={{ state, dispatch }}>
-        <BrowserRouter>
-          <Navbar />
-          <Routing />
-        </BrowserRouter>
-      </UserContext.Provider>
+      {loader ? (
+        <>
+          <HashLoader
+            color={"#123abc"}
+            css={override}
+            loading={loader}
+            size={150}
+          />
+          <h3
+            style={{
+              fontFamily: "cursive",
+              fontSize: "1.5rem",
+              position: "absolute",
+              top: "32%",
+              left: "50%",
+              marginRight: "-50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            Loading instaposts....
+          </h3>
+        </>
+      ) : (
+        <UserContext.Provider value={{ state, dispatch }}>
+          <BrowserRouter>
+            <Navbar />
+            <Routing />
+          </BrowserRouter>
+        </UserContext.Provider>
+      )}
     </div>
   );
 }
