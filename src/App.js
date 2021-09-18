@@ -59,15 +59,14 @@ function App() {
 
   useEffect(() => {
     const refresh_token = Cookies.get("jid");
-    console.log(refresh_token);
+
     if (refresh_token) {
       console.log("already logged in");
       setLoader(false);
     } else {
-      console.log("already  in");
       setTimeout(() => {
         setLoader(false);
-      }, 3000);
+      }, 2000);
     }
   }, []);
 

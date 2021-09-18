@@ -38,6 +38,7 @@ const Login = () => {
       .loginUser(credentials)
       .then((res) => {
         if (res.status === 200) {
+          console.log(res.data.user);
           dispatch({ type: "USER", payload: res.data.user });
           history.push("/");
         } else {

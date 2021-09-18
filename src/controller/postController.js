@@ -81,5 +81,75 @@ const postController = {
       console.log(err);
     }
   },
+
+  async likePost(postId) {
+    let refresh_token = Cookies.get("jid");
+    try {
+      if (refresh_token) {
+        const res = await userController.protect(refresh_token);
+
+        if (res.status === 200 && res.data.access_token) {
+          try {
+            const postRes = await axios.put(
+              "api/post/like",
+              { postId: postId },
+              {
+                credentials: "include",
+                headers: {
+                  authorization: `Bearer ${res.data.access_token}`,
+                },
+              }
+            );
+            if (postRes.status === 200) {
+              return postRes;
+            } else {
+              console.log(postRes);
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          console.log("invalid tokens");
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  async dislikePost(postId) {
+    let refresh_token = Cookies.get("jid");
+    try {
+      if (refresh_token) {
+        const res = await userController.protect(refresh_token);
+
+        if (res.status === 200 && res.data.access_token) {
+          try {
+            const postRes = await axios.put(
+              "api/post/dislike",
+              { postId: postId },
+              {
+                credentials: "include",
+                headers: {
+                  authorization: `Bearer ${res.data.access_token}`,
+                },
+              }
+            );
+            if (postRes.status === 200) {
+              return postRes;
+            } else {
+              console.log(postRes);
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          console.log("invalid tokens");
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 export default postController;

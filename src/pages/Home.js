@@ -15,6 +15,7 @@ const Home = () => {
     const posts = await postController.showAllPosts();
     if (posts !== undefined && posts.status === 200) {
       const array = posts.data.posts.reverse();
+      console.log(array);
       setData(array);
     } else {
       history.push("/login");
@@ -37,7 +38,7 @@ const Home = () => {
     <div>
       <CreatePost setCount={setCount} />
       {data.map((post, index) => {
-        return <Postcard key={index} post={post} />;
+        return <Postcard setCount={setCount} key={index} post={post} />;
       })}
     </div>
   );
